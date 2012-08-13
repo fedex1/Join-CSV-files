@@ -1,5 +1,5 @@
+#!/usr/bin/env python
 import sys
-import hashlib
 import csv
 
 # join.py will perform a join of csv files based on the first column which is used as a key
@@ -43,14 +43,16 @@ import csv
 
 def main():
     writer = csv.writer(sys.stdout,lineterminator='\n')
-    savekey = None
     csvReader = csv.reader(sys.stdin, delimiter=',', quotechar='"')
     dict={}
     for row in csvReader:
-        if row[0] in dict:
-            dict[row[0]].extend(row)
+        # make the key for any columns you wish
+        #key = '%s-%s' % (row[0],row[1])
+        key = '%s' % (row[0])
+        if key in dict:
+            dict[key].extend(row)
         else:
-            dict[row[0]] = row
+            dict[key] = row
 
     for key in dict:
         dict[key].insert(0,len(dict[key]))
